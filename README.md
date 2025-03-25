@@ -6,7 +6,7 @@ Blender Extensions (https://extensions.blender.org/add-ons/bve-import-export/) �
 CSV出力にも対応しています。また、OpenBVE専用のCSV機能にも対応します。
 
 > [!IMPORTANT]
-> OpenBVE CSVでOpenBVEの機能のプロパティを設定するには、そのマテリアルのノード内に「OpenBVE CSV Properties」というノードを配置する必要があります
+> OpenBVE CSVでOpenBVEの機能のプロパティを設定するには、そのマテリアルのノード内に「OpenBVE CSV プロパティ」というノードを配置する必要があります
 
 対応Blenderバージョン:4.3.0以降  
 動作確認Bveバージョン:5.8, 6.0  
@@ -89,7 +89,7 @@ csvview5 tested
 # Supported Blender features
 * Material
   * Color without nodes
-  * Precinple BSDF nodes
+  * Pricinpled BSDF nodes
   * Texture nodes
   * Base color
   * Alpha
