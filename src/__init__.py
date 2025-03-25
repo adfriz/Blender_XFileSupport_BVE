@@ -5,8 +5,12 @@
 # see https://github.com/kusaanko/Blender_XFileSupport_BVE/blob/main/LICENSE
 
 import bpy
+
+from .export_csv_openbve import ExportOpenBveCSVFile
+from .types import CustomOpenBveCsvNode
 from .export_csv import ExportCSVFile
 from .direct_x import ExportDirectXXFile, ImportDirectXXFile
+from bl_ui import node_add_menu
 
 # locale
 #    (target_context, key): translated_str
@@ -39,11 +43,20 @@ def menu_func_import(self, context):
 def menu_func_export(self, context):
     self.layout.operator(ExportDirectXXFile.bl_idname, text="DirectX XFile (.x) for BVE")
     self.layout.operator(ExportCSVFile.bl_idname, text="CSV (.csv) for BVE")
+    self.layout.operator(ExportOpenBveCSVFile.bl_idname, text="CSV (.csv) for OpenBVE")
+
+def add_node_to_menu(self, context):
+    layout = self.layout
+    props = layout.operator("node.add_node", text="OpenBVE CSV Properties")
+    props.type = CustomOpenBveCsvNode.bl_idname
+    return props
 
 classes = (
     ImportDirectXXFile,
     ExportDirectXXFile,
     ExportCSVFile,
+    ExportOpenBveCSVFile,
+    CustomOpenBveCsvNode,
 )
 
 def register():
@@ -53,17 +66,20 @@ def register():
     bpy.types.TOPBAR_MT_file_import.append(menu_func_import)
     bpy.types.TOPBAR_MT_file_export.append(menu_func_export)
 
+    bpy.types.NODE_MT_add.append(add_node_to_menu)
+
     bpy.app.translations.register(__name__, translations_dict)
 
 
 def unregister():
     bpy.app.translations.unregister(__name__)
 
-    for cls in classes:
-        bpy.utils.unregister_class(cls)
-
     bpy.types.TOPBAR_MT_file_import.remove(menu_func_import)
     bpy.types.TOPBAR_MT_file_export.remove(menu_func_export)
+    bpy.types.NODE_MT_add.remove(add_node_to_menu)
+
+    for cls in classes:
+        bpy.utils.unregister_class(cls)
 
 
 if __name__ == "__main__":

@@ -1,9 +1,21 @@
+import inspect
 import re
 import bpy
 import math
 import os
 
+from .types import CustomOpenBveCsvNode
+
 from .utility import vertex_to_str
+
+class OpenBveCsvProperty:
+    enable_cross_fading: bool = False
+    use_blend_mode: bool = False
+    blend_mode: str = 'Normal'
+    glow_half_distance: int = 0
+    glow_attenuation_mode: str = 'DivideExponent4'
+    decal_transparent_color: tuple[float, float, float] = (0.0, 0.0, 0.0)
+    nighttime_texture_path: str | None = None
 
 class Material:
     face_color: tuple[float, float, float, float] = (0.0, 0.0, 0.0, 1.0)
@@ -12,6 +24,8 @@ class Material:
     emission_color: tuple[float, float, float, float] = (0.0, 0.0, 0.0, 1.0)
     texture_path = ""
     name = ""
+    openbve_csv_property: OpenBveCsvProperty | None = None
+    texture_extension = "REPEAT"
 
 def gen_fake_material():
     # 偽物のマテリアルを作成 / Create a fake material
@@ -151,13 +165,15 @@ class ModelDataUtility:
                 # ノードを取得
                 nodes = material.node_tree.nodes
                 # プリンシプルBSDFを取得
-                principled = next(n for n in nodes if n.type == 'BSDF_PRINCIPLED')
+                principled = next(n for n in nodes if n.bl_idname == 'ShaderNodeBsdfPrincipled')
+
                 # ベースカラー
                 if len(principled.inputs['Base Color'].links) > 0:
                     need_color = True
                     for link in principled.inputs['Base Color'].links:
-                        if link.from_node.type == "TEX_IMAGE":
+                        if link.from_node.bl_idname == "ShaderNodeTexImage":
                             texture = os.path.basename(link.from_node.image.filepath)
+                            x_material.texture_extension = link.from_node.extension
                         if link.from_node.type == "RGB":
                             need_color = False
                             for out in link.from_node.outputs:
@@ -199,6 +215,26 @@ class ModelDataUtility:
 
                 if texture != "":
                     x_material.texture_path = texture
+                    
+                # OpenBveCsvNodeを取得
+                for n in nodes:
+                    if n.bl_idname == CustomOpenBveCsvNode.bl_idname:
+                        openbve_csv_node: CustomOpenBveCsvNode = n
+                        if openbve_csv_node is not None:
+                            x_material.openbve_csv_property = OpenBveCsvProperty()
+                            x_material.openbve_csv_property.enable_cross_fading = openbve_csv_node.enable_cross_fading
+                            x_material.openbve_csv_property.use_blend_mode = openbve_csv_node.use_blend_mode
+                            x_material.openbve_csv_property.blend_mode = openbve_csv_node.blend_mode
+                            x_material.openbve_csv_property.glow_half_distance = openbve_csv_node.glow_half_distance
+                            x_material.openbve_csv_property.glow_attenuation_mode = openbve_csv_node.glow_attenuation_mode
+                            x_material.openbve_csv_property.decal_transparent_color = \
+                                (
+                                    openbve_csv_node.decal_transparent_color[0],
+                                    openbve_csv_node.decal_transparent_color[1],
+                                    openbve_csv_node.decal_transparent_color[2],
+                                )
+                            x_material.openbve_csv_property.nighttime_texture_path = openbve_csv_node.nighttime_texture_path
+                         
             else:
                 # ベースカラー
                 x_material.face_color = material.diffuse_color
