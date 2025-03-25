@@ -32,6 +32,10 @@ translations_dict = {
         ("*", "This plug-in is for Bve. So some features are not supported."): "このプラグインはBve向けです。そのため、一部の機能はサポートされていません。",
         ("*", "For OpenBVE"): "OpenBVE向け",
         ("*", "Decal transparent color"): "テクスチャの透過色",
+        ("*", "Enable cross-fading"): "cross-fadingを有効にする",
+        ("*", "Use blend mode"): "ブレンドモードを使用する",
+        ("*", "Nighttime texture"): "夜間テクスチャ",
+        ("*", "Glow attenuation mode"): "Glow減衰モード",
     }
 }
 
