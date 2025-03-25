@@ -22,6 +22,18 @@ csvview5互換あり
 # 対応しているCSVファイルの機能
 * 全て
 
+# 対応しているOpenBVE CSVファイルの機能
+* 頂点
+* 面
+* 法線
+* マテリアル
+* テクスチャ
+* SetBlendMode
+* SetWrapMode
+* NighttimeTexture
+* SetDecalTransparentColor
+* EnableCrossfading
+
 # 対応しているBlenderの機能
 * マテリアル
   * ノード未使用時の色
@@ -54,6 +66,19 @@ csvview5 tested
 
 # Supported csv file features
 * All
+
+# Supported OpenBVE csv file features
+* Vertices
+* Faces
+* Normals
+* SetColorAll
+* LoadTexture
+* SetEmissiveColorAll
+* SetBlendMode
+* SetWrapMode
+* NighttimeTexture
+* SetDecalTransparentColor
+* EnableCrossfading
 
 # Supported Blender features
 * Material
