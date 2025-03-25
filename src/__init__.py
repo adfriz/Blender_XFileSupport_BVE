@@ -36,6 +36,7 @@ translations_dict = {
         ("*", "Use blend mode"): "ブレンドモードを使用する",
         ("*", "Nighttime texture"): "夜間テクスチャ",
         ("*", "Glow attenuation mode"): "Glow減衰モード",
+        ("*", "OpenBVE CSV Properties"): "OpenBVE CSVプロパティ",
     }
 }
 
