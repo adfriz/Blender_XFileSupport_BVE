@@ -108,11 +108,15 @@ class ExportOpenBveCSVFile(bpy.types.Operator, ExportHelper):
             if x_material.texture_path != "":
                 nighttime_texture_path = openbve_csv_property.nighttime_texture_path if openbve_csv_property is not None else ""
                 csv_file_content += f"LoadTexture,{x_material.texture_path},{nighttime_texture_path}\n"
-                if openbve_csv_property is not None:
+                if openbve_csv_property is not None and openbve_csv_property.use_decal_transparent_color:
                     csv_file_content += "SetDecalTransparentColor," + \
                         str(round(openbve_csv_property.decal_transparent_color[0] * 255)) + "," + \
                         str(round(openbve_csv_property.decal_transparent_color[1] * 255)) + "," + \
                         str(round(openbve_csv_property.decal_transparent_color[2] * 255)) + "\n"
+                if x_material.texture_extension == 'REPEAT':
+                    csv_file_content += "SetWrapMode,RepeatRepeat\n"
+                elif x_material.texture_extension == 'EXTEND':
+                    csv_file_content += "SetWrapMode,ClampClamp\n"
                 has_texture = True
             # 面色 / Face color
             csv_file_content += "SetColorAll," + \
@@ -125,10 +129,6 @@ class ExportOpenBveCSVFile(bpy.types.Operator, ExportHelper):
                 str(round(x_material.emission_color[0] * 255)) + "," + \
                 str(round(x_material.emission_color[1] * 255)) + "," + \
                 str(round(x_material.emission_color[2] * 255)) + "\n"
-            if x_material.texture_extension == 'REPEAT':
-                csv_file_content += "SetWrapMode,RepeatRepeat\n"
-            elif x_material.texture_extension == 'EXTEND':
-                csv_file_content += "SetWrapMode,ClampClamp\n"
             if openbve_csv_property is not None:
                 # Enable cross-fading
                 if openbve_csv_property.enable_cross_fading:

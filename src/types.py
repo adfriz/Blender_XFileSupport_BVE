@@ -42,6 +42,11 @@ class CustomOpenBveCsvNode(bpy.types.Node):
         default='DivideExponent4',
     )
 
+    use_decal_transparent_color: BoolProperty(
+        name="Use decal transparent color",
+        default=False,
+    )
+
     decal_transparent_color: FloatVectorProperty(
         name="Decal transparent color",
         size=4,
@@ -65,6 +70,7 @@ class CustomOpenBveCsvNode(bpy.types.Node):
         layout.prop(self, "glow_half_distance")
         layout.prop(self, "glow_attenuation_mode")
         layout.prop(self, "nighttime_texture_path")
+        layout.prop(self, "use_decal_transparent_color")
         layout.prop(self, "decal_transparent_color")
 
     def update(self):

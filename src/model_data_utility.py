@@ -14,6 +14,7 @@ class OpenBveCsvProperty:
     blend_mode: str = 'Normal'
     glow_half_distance: int = 0
     glow_attenuation_mode: str = 'DivideExponent4'
+    use_decal_transparent_color: bool = False
     decal_transparent_color: tuple[float, float, float] = (0.0, 0.0, 0.0)
     nighttime_texture_path: str | None = None
 
@@ -231,6 +232,7 @@ class ModelDataUtility:
                             x_material.openbve_csv_property.blend_mode = openbve_csv_node.blend_mode
                             x_material.openbve_csv_property.glow_half_distance = openbve_csv_node.glow_half_distance
                             x_material.openbve_csv_property.glow_attenuation_mode = openbve_csv_node.glow_attenuation_mode
+                            x_material.openbve_csv_property.use_decal_transparent_color = openbve_csv_node.use_decal_transparent_color
                             x_material.openbve_csv_property.decal_transparent_color = \
                                 (
                                     openbve_csv_node.decal_transparent_color[0],

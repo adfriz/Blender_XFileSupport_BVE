@@ -31,6 +31,7 @@ translations_dict = {
         ("*", "Gamma correction is not 2.2"): "ガンマ補正は2.2である必要があります",
         ("*", "This plug-in is for Bve. So some features are not supported."): "このプラグインはBve向けです。そのため、一部の機能はサポートされていません。",
         ("*", "For OpenBVE"): "OpenBVE向け",
+        ("*", "Use decal transparent color"): "透過色を使用する",
         ("*", "Decal transparent color"): "テクスチャの透過色",
         ("*", "Enable cross-fading"): "cross-fadingを有効にする",
         ("*", "Use blend mode"): "ブレンドモードを使用する",
