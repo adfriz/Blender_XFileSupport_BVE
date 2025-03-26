@@ -40,6 +40,12 @@ class ExportOpenBveCSVFile(bpy.types.Operator, ExportHelper):
         default=True,
     )
 
+    use_texture_name: BoolProperty(
+        name="Use texture name instead of texture path",
+        description="This is useful when you want to use a relative path",
+        default=False,
+    )
+
     def execute(self, context):
         if not self.filepath.endswith(".csv"):
             return {'CANCELLED'}
@@ -107,7 +113,10 @@ class ExportOpenBveCSVFile(bpy.types.Operator, ExportHelper):
             has_texture = False
             if x_material.texture_path != "":
                 nighttime_texture_path = openbve_csv_property.nighttime_texture_path if openbve_csv_property is not None else ""
-                csv_file_content += f"LoadTexture,{x_material.texture_path},{nighttime_texture_path}\n"
+                texture_path = x_material.texture_path
+                if self.use_texture_name and x_material.texture_name != "":
+                    texture_path = x_material.texture_name
+                csv_file_content += f"LoadTexture,{texture_path},{nighttime_texture_path}\n"
                 if openbve_csv_property is not None and openbve_csv_property.use_decal_transparent_color:
                     csv_file_content += "SetDecalTransparentColor," + \
                         str(round(openbve_csv_property.decal_transparent_color[0] * 255)) + "," + \

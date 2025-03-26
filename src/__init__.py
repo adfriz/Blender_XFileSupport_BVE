@@ -38,6 +38,8 @@ translations_dict = {
         ("*", "Nighttime texture"): "夜間テクスチャ",
         ("*", "Glow attenuation mode"): "Glow減衰モード",
         ("*", "OpenBVE CSV Properties"): "OpenBVE CSVプロパティ",
+        ("*", "Use texture name instead of texture path"): "テクスチャのパスの代わりにテクスチャ名を使用する",
+        ("*", "This is useful when you want to use a relative path"): "相対パスを使用したい場合に便利です",
     }
 }
 

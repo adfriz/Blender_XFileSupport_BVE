@@ -24,6 +24,7 @@ class Material:
     specular_color: tuple[float, float, float] = (0.0, 0.0, 0.0)
     emission_color: tuple[float, float, float, float] = (0.0, 0.0, 0.0, 1.0)
     texture_path = ""
+    texture_name = ""
     name = ""
     openbve_csv_property: OpenBveCsvProperty | None = None
     texture_extension = "REPEAT"
@@ -179,6 +180,7 @@ class ModelDataUtility:
                         if link.from_node.bl_idname == "ShaderNodeTexImage":
                             texture = os.path.basename(link.from_node.image.filepath)
                             x_material.texture_extension = link.from_node.extension
+                            x_material.texture_name = link.from_node.image.name
                         if link.from_node.type == "RGB":
                             need_color = False
                             for out in link.from_node.outputs:
