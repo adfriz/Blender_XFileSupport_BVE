@@ -127,6 +127,12 @@ class ModelDataUtility:
                     for vertex in reversed(polygon.vertices):
                         # ワールド座標から変換
                         vertex_co = obj.matrix_world @ mesh.vertices[vertex].co
+                        if smooth_shading:
+                            nor = mesh.vertices[vertex].normal
+                        mx_inv = obj.matrix_world.inverted()
+                        mx_norm = mx_inv.transposed().to_3x3()
+                        world_norm = mx_norm @ nor
+                        world_norm.normalize()
                         # スケールに合わせる
                         vertex_co[0] *= scale
                         vertex_co[1] *= scale
@@ -141,13 +147,11 @@ class ModelDataUtility:
                             vertexes_dict[key] = len(vertexes_dict.keys())
                             self.vertexes.append(vertex_co)
                             self.uv_data.append(uv)
-                        if smooth_shading:
-                            nor = mesh.vertices[vertex].normal
-                        if vertex_to_str(nor) not in normals_dict.keys():
-                            normals_dict[vertex_to_str(nor)] = len(normals_dict.keys())
-                            self.normals.append(nor)
+                        if vertex_to_str(world_norm) not in normals_dict.keys():
+                            normals_dict[vertex_to_str(world_norm)] = len(normals_dict.keys())
+                            self.normals.append(world_norm)
                         ver.append(vertexes_dict[key])
-                        normal.append(normals_dict[vertex_to_str(nor)])
+                        normal.append(normals_dict[vertex_to_str(world_norm)])
                         vertex_index -= 1
                     vertex_index += len(polygon.vertices) + 1
                     self.faces.append(ver)
