@@ -3,7 +3,7 @@ schema_version = "1.0.0"
 # Example of manifest file for a Blender extension
 # Change the values according to your extension
 id = "bve_import_export"
-version = "5.0.5"
+version = "5.1.0"
 name = "BVE Import/Export"
 tagline = "Import/Export DirectX X (.x) or Export CSV files for BVE/OpenBVE"
 maintainer = "Kusaanko"
@@ -24,9 +24,7 @@ blender_version_min = "4.3.0"
 
 # License conforming to https://spdx.org/licenses/ (use "SPDX: prefix)
 # https://docs.blender.org/manual/en/dev/advanced/extensions/licenses.html
-license = [
-  "SPDX:GPL-3.0-or-later",
-]
+license = ["SPDX:GPL-3.0-or-later"]
 # # Optional: required by some licenses.
 # copyright = [
 #   "2002-2024 Developer Name",
