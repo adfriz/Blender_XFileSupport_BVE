@@ -128,13 +128,13 @@ class ExportOpenBveCSVFile(bpy.types.Operator, ExportHelper):
                     csv_file_content += "SetWrapMode,ClampClamp\n"
                 has_texture = True
             # 面色 / Face color
-            csv_file_content += "SetColorAll," + \
+            csv_file_content += "SetColor," + \
                 str(round(x_material.face_color[0] * 255)) + "," + \
                 str(round(x_material.face_color[1] * 255)) + "," + \
                 str(round(x_material.face_color[2] * 255)) + "," + \
                 str(round(x_material.face_color[3] * 255)) + "\n"
             # OpenBVEでは放射色に対応 / OpenBVE supports emissive color
-            csv_file_content += "SetEmissiveColorAll," + \
+            csv_file_content += "SetEmissiveColor," + \
                 str(round(x_material.emission_color[0] * 255)) + "," + \
                 str(round(x_material.emission_color[1] * 255)) + "," + \
                 str(round(x_material.emission_color[2] * 255)) + "\n"
