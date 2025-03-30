@@ -46,6 +46,12 @@ class ExportOpenBveCSVFile(bpy.types.Operator, ExportHelper):
         default=False,
     )
 
+    use_add_face2: BoolProperty(
+        name="Use AddFace2",
+        description="Use AddFace2 instead of AddFace",
+        default=False,
+    )
+
     def execute(self, context):
         if not self.filepath.endswith(".csv"):
             return {'CANCELLED'}
@@ -61,6 +67,8 @@ class ExportOpenBveCSVFile(bpy.types.Operator, ExportHelper):
         uv_data = model_data_utility.uv_data
 
         csv_file_content = ""
+
+        face_command = "AddFace2" if self.use_add_face2 else "AddFace"
 
         # マテリアルごとに作成 / Create for each material
         for material_index in range(len(x_materials)):
@@ -106,7 +114,7 @@ class ExportOpenBveCSVFile(bpy.types.Operator, ExportHelper):
                     float_to_str(vertex[4]) + "\n"
             # 面データ / Face data
             for face in faces_no_duplicates:
-                csv_file_content += "AddFace,"
+                csv_file_content += face_command + ","
                 for vertex_index in face:
                     csv_file_content += str(vertex_index) + ","
                 csv_file_content = csv_file_content[0:-1] + "\n"

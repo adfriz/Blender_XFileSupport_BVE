@@ -40,6 +40,8 @@ translations_dict = {
         ("*", "OpenBVE CSV Properties"): "OpenBVE CSVプロパティ",
         ("*", "Use texture name instead of texture path"): "テクスチャのパスの代わりにテクスチャ名を使用する",
         ("*", "This is useful when you want to use a relative path"): "相対パスを使用したい場合に便利です",
+        ("*", "Use AddFace2"): "AddFace2を使用する",
+        ("*", "Use AddFace2 instead of AddFace"): "AddFaceの代わりにAddFace2を使用する",
     }
 }
 
