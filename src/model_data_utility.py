@@ -23,6 +23,8 @@ class Material:
     power = 0.0
     specular_color: tuple[float, float, float] = (0.0, 0.0, 0.0)
     emission_color: tuple[float, float, float, float] = (0.0, 0.0, 0.0, 1.0)
+    emissive_power = 0.0
+    emission_color_calculated: tuple[float, float, float] = (0.0, 0.0, 0.0)
     texture_path = ""
     texture_name = ""
     name = ""
@@ -226,6 +228,7 @@ class ModelDataUtility:
 
                 # 放射色
                 x_material.emission_color = principled.inputs['Emission Color'].default_value
+                x_material.emissive_power = principled.inputs['Emission Strength'].default_value
 
                 if texture != "":
                     x_material.texture_path = texture
@@ -259,6 +262,15 @@ class ModelDataUtility:
                 x_material.specular_color = material.specular_color
                 # 放射色
                 x_material.emission_color = (0.0, 0.0, 0.0, 1.0)
+                # 放射強度
+                x_material.emissive_power = 0.0
+
+            # 放射色の計算
+            x_material.emission_color_calculated = (
+                x_material.emission_color[0] * min(x_material.emissive_power, 1.0),
+                x_material.emission_color[1] * min(x_material.emissive_power, 1.0),
+                x_material.emission_color[2] * min(x_material.emissive_power, 1.0)
+            )
             self.x_materials.append(x_material)
             
         # 生成した偽物のマテリアルを削除

@@ -42,6 +42,8 @@ translations_dict = {
         ("*", "This is useful when you want to use a relative path"): "相対パスを使用したい場合に便利です",
         ("*", "Use AddFace2"): "AddFace2を使用する",
         ("*", "Use AddFace2 instead of AddFace"): "AddFaceの代わりにAddFace2を使用する",
+        ("*", "Use emissive power"): "放射強度を使用する",
+        ("*", "Multiply emissive color by emissive power"): "放射色に放射強度を掛けます",
     }
 }
 

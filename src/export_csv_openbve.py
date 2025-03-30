@@ -52,6 +52,12 @@ class ExportOpenBveCSVFile(bpy.types.Operator, ExportHelper):
         default=False,
     )
 
+    use_emissive_power: BoolProperty(
+        name="Use emissive power",
+        description="Multiply emissive color by emissive power",
+        default=True,
+    )
+
     def execute(self, context):
         if not self.filepath.endswith(".csv"):
             return {'CANCELLED'}
@@ -142,10 +148,13 @@ class ExportOpenBveCSVFile(bpy.types.Operator, ExportHelper):
                 str(round(x_material.face_color[2] * 255)) + "," + \
                 str(round(x_material.face_color[3] * 255)) + "\n"
             # OpenBVEでは放射色に対応 / OpenBVE supports emissive color
+            emissive_color = x_material.emission_color
+            if self.use_emissive_power:
+                emissive_color = x_material.emission_color_calculated
             csv_file_content += "SetEmissiveColor," + \
-                str(round(x_material.emission_color[0] * 255)) + "," + \
-                str(round(x_material.emission_color[1] * 255)) + "," + \
-                str(round(x_material.emission_color[2] * 255)) + "\n"
+                str(round(emissive_color[0] * 255)) + "," + \
+                str(round(emissive_color[1] * 255)) + "," + \
+                str(round(emissive_color[2] * 255)) + "\n"
             if openbve_csv_property is not None:
                 # Enable cross-fading
                 if openbve_csv_property.enable_cross_fading:

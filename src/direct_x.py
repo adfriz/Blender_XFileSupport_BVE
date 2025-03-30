@@ -915,6 +915,12 @@ class ExportDirectXXFile(bpy.types.Operator, ExportHelper):
         default=True,
     )
 
+    use_emissive_power: BoolProperty(
+        name="Use emissive power",
+        description="Multiply emissive color by emissive power",
+        default=True,
+    )
+
     def execute(self, context):
         if not self.filepath.endswith(".x"):
             return {'CANCELLED'}
@@ -1153,7 +1159,10 @@ class ExportDirectXXFile(bpy.types.Operator, ExportHelper):
                     color_list[0:4] = x_material.face_color
                     color_list[4] = x_material.power
                     color_list[5:8] = x_material.specular_color[0:3]
-                    color_list[8:11] = x_material.emission_color[0:3]
+                    emissive_color = x_material.emission_color
+                    if self.use_emissive_power:
+                        emissive_color = x_material.emission_color_calculated
+                    color_list[8:11] = emissive_color[0:3]
                     write_float_list(target, color_list)
                     if x_material.texture_path != "":
                         write_shorts(target, [TOKEN_NAME])
@@ -1299,10 +1308,13 @@ template TextureFilename {
                                   float_to_str(x_material.specular_color[0]) + ";" + \
                                   float_to_str(x_material.specular_color[1]) + ";" + \
                                   float_to_str(x_material.specular_color[2]) + ";;\n"
+                emissive_color = x_material.emission_color
+                if self.use_emissive_power:
+                    emissive_color = x_material.emission_color_calculated
                 x_file_content += "   " + \
-                                  float_to_str(x_material.emission_color[0]) + ";" + \
-                                  float_to_str(x_material.emission_color[1]) + ";" + \
-                                  float_to_str(x_material.emission_color[2]) + ";;\n"
+                                  float_to_str(emissive_color[0]) + ";" + \
+                                  float_to_str(emissive_color[1]) + ";" + \
+                                  float_to_str(emissive_color[2]) + ";;\n"
                 if x_material.texture_path != "":
                     x_file_content += "\n   TextureFilename {\n"
                     x_file_content += "    \"" + x_material.texture_path + "\";\n"
