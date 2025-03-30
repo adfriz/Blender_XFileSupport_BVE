@@ -1290,19 +1290,19 @@ template TextureFilename {
                 else:
                     x_file_content += "  Material {\n"
                 x_file_content += "   " + \
-                                  float_to_str(round(x_material.face_color[0], 6)) + ";" + \
-                                  float_to_str(round(x_material.face_color[1], 6)) + ";" + \
-                                  float_to_str(round(x_material.face_color[2], 6)) + ";" + \
-                                  float_to_str(round(x_material.face_color[3], 6)) + ";;\n"
-                x_file_content += "   " + float_to_str(round(x_material.power, 6)) + ";\n"
+                                  float_to_str(x_material.face_color[0]) + ";" + \
+                                  float_to_str(x_material.face_color[1]) + ";" + \
+                                  float_to_str(x_material.face_color[2]) + ";" + \
+                                  float_to_str(x_material.face_color[3]) + ";;\n"
+                x_file_content += "   " + float_to_str(x_material.power) + ";\n"
                 x_file_content += "   " + \
-                                  float_to_str(round(x_material.specular_color[0], 6)) + ";" + \
-                                  float_to_str(round(x_material.specular_color[1], 6)) + ";" + \
-                                  float_to_str(round(x_material.specular_color[2], 6)) + ";;\n"
+                                  float_to_str(x_material.specular_color[0]) + ";" + \
+                                  float_to_str(x_material.specular_color[1]) + ";" + \
+                                  float_to_str(x_material.specular_color[2]) + ";;\n"
                 x_file_content += "   " + \
-                                  float_to_str(round(x_material.emission_color[0], 6)) + ";" + \
-                                  float_to_str(round(x_material.emission_color[1], 6)) + ";" + \
-                                  float_to_str(round(x_material.emission_color[2], 6)) + ";;\n"
+                                  float_to_str(x_material.emission_color[0]) + ";" + \
+                                  float_to_str(x_material.emission_color[1]) + ";" + \
+                                  float_to_str(x_material.emission_color[2]) + ";;\n"
                 if x_material.texture_path != "":
                     x_file_content += "\n   TextureFilename {\n"
                     x_file_content += "    \"" + x_material.texture_path + "\";\n"
@@ -1327,7 +1327,7 @@ template TextureFilename {
             x_file_content += " MeshTextureCoords {\n"
             x_file_content += "  " + str(len(uv_data)) + ";\n"
             for vertex in uv_data:
-                x_file_content += "  " + float_to_str(round(vertex[0], 6)) + ";" + float_to_str(round(-vertex[1] + 1, 6)) + ";,\n"
+                x_file_content += "  " + float_to_str(vertex[0]) + ";" + float_to_str(-vertex[1] + 1) + ";,\n"
             x_file_content = x_file_content[0:-2] + ";\n"
             x_file_content += " }\n"
             x_file_content += "}\n"
