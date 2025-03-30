@@ -112,6 +112,9 @@ class ModelDataUtility:
                         self.faces_use_material.append(materials_dict[fake_material.name])
                     else:
                         for material in mesh.materials:
+                            if material is None:
+                                # マテリアルを追加したが、新規ボタンを押していない状態のマテリアルの場合
+                                continue
                             if material.name not in materials_dict.keys():
                                 materials_dict[material.name] = len(materials_dict.keys())
                                 materials.append(material)
@@ -161,6 +164,9 @@ class ModelDataUtility:
                     self.vertex_use_normal.append(normal)
 
         for material in materials:
+            if material is None:
+                # マテリアルを追加したが、新規ボタンを押していない状態のマテリアルの場合
+                continue
             # ノードを使用するかどうか
             x_material = Material()
             # マテリアル名はアルファベット英数字、アンダーバー、ハイフン
