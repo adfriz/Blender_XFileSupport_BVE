@@ -97,10 +97,11 @@ class ModelDataUtility:
                 
                 uv_vertexes = mesh.uv_layers.active.data
                 vertex_index = 0
+                # 法線取得用
+                loops = mesh.loops
                 for polygon in mesh.polygons:
                     ver = []
                     normal = []
-                    smooth_shading = polygon.use_smooth
                     nor = polygon.normal
                     vertex_index += len(polygon.vertices) - 1
                     texture = ""
@@ -126,11 +127,11 @@ class ModelDataUtility:
                                             texture = os.path.basename(link.from_node.image.filepath)
                         self.faces_use_material.append(materials_dict[mesh.materials[polygon.material_index].name])
 
-                    for vertex in reversed(polygon.vertices):
+                    for (vertex, loop_index) in zip(reversed(polygon.vertices), reversed(polygon.loop_indices)):
                         # ワールド座標から変換
                         vertex_co = obj.matrix_world @ mesh.vertices[vertex].co
-                        if smooth_shading:
-                            nor = mesh.vertices[vertex].normal
+                        # 法線を取得する
+                        nor = loops[loop_index].normal
                         mx_inv = obj.matrix_world.inverted()
                         mx_norm = mx_inv.transposed().to_3x3()
                         world_norm = mx_norm @ nor
