@@ -3,12 +3,12 @@ import struct
 def vertex_to_str(vertex):
     # Blender X Z Y
     # DirectX X Y Z
-    return float_to_str(round(vertex[0], 6)) + ";" + float_to_str(round(vertex[2], 6)) + ";" + float_to_str(round(vertex[1], 6))
+    return float_to_str(round(vertex[0], 10)) + ";" + float_to_str(round(vertex[2], 10)) + ";" + float_to_str(round(vertex[1], 10))
 
 def vertex_to_str_csv(vertex):
     # Blender X Z Y
     # DirectX X Y Z
-    return float_to_str(round(vertex[0], 6)) + "," + float_to_str(round(vertex[2], 6)) + "," + float_to_str(round(vertex[1], 6))
+    return float_to_str(round(vertex[0], 10)) + "," + float_to_str(round(vertex[2], 10)) + "," + float_to_str(round(vertex[1], 10))
 
 
 # expを使用しないstrにする / Convert float to string without using exp
