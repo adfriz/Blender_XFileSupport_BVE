@@ -58,6 +58,9 @@ class ExportOpenBveCSVFile(bpy.types.Operator, ExportHelper):
         default=True,
     )
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
     def execute(self, context):
         if not self.filepath.endswith(".csv"):
             return {'CANCELLED'}

@@ -218,7 +218,8 @@ class ImportDirectXXFile(bpy.types.Operator, ImportHelper):
         default=True,
     )
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.initialize()
     
     def initialize(self):
@@ -920,6 +921,9 @@ class ExportDirectXXFile(bpy.types.Operator, ExportHelper):
         description="Multiply emissive color by emissive power",
         default=True,
     )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
     def execute(self, context):
         if not self.filepath.endswith(".x"):

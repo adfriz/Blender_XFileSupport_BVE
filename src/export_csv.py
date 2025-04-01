@@ -47,6 +47,9 @@ class ExportCSVFile(bpy.types.Operator, ExportHelper):
         default=(0.0, 0.0, 0.0, 1.0),
     )
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
     def execute(self, context):
         if not self.filepath.endswith(".csv"):
             return {'CANCELLED'}

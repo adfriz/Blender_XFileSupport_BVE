@@ -58,9 +58,9 @@ class CustomOpenBveCsvNode(bpy.types.Node):
         name="Nighttime texture",
         default="",
     )
- 
-    def init(self, context):
-        pass
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
     # Additional buttons displayed on the node.
     def draw_buttons(self, context, layout):
