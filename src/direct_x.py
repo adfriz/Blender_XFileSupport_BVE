@@ -308,7 +308,7 @@ class ImportDirectXXFile(bpy.types.Operator, ImportHelper):
                 material_faces[material_id].append(i)
 
         # モデル名を決定 / Determine the model name
-        model_name = (node.node_name if node.node_name is not None and len(node.node_name) != 0 else os.path.splitext(os.path.basename(self.filepath))[0]) + str(self.object_index)
+        model_name = (node.node_name if node.node_name is not None and len(node.node_name) != 0 else os.path.splitext(bpy.path.basename(self.filepath))[0]) + str(self.object_index)
         self.object_index += 1
 
         # マテリアルごとにオブジェクトを作成 / Create objects for each material
@@ -354,7 +354,7 @@ class ImportDirectXXFile(bpy.types.Operator, ImportHelper):
 
             # テクスチャの紐付け / Linking textures
             if x_material.texture_path and x_material.texture_path != "":
-                path = "/".join(os.path.abspath(self.filepath).split(os.path.sep)[0:-1])
+                path = "/".join(bpy.path.abspath(self.filepath).split(os.path.sep)[0:-1])
                 path = path + "/" + x_material.texture_path
                 if os.path.exists(path):
                     x_material.texture_path = path

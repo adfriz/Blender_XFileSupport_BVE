@@ -1,8 +1,6 @@
-import inspect
 import re
 import bpy
 import math
-import os
 
 from .types import CustomOpenBveCsvNode
 
@@ -129,7 +127,7 @@ class ModelDataUtility:
                                 if len(principled.inputs['Base Color'].links) > 0:
                                     for link in principled.inputs['Base Color'].links:
                                         if link.from_node.bl_idname == "ShaderNodeTexImage":
-                                            texture = os.path.basename(link.from_node.image.filepath)
+                                            texture = bpy.path.basename(link.from_node.image.filepath)
                         self.faces_use_material.append(materials_dict[mesh.materials[polygon.material_index].name])
 
                     for (vertex, loop_index) in zip(reversed(polygon.vertices), reversed(polygon.loop_indices)):
@@ -188,7 +186,7 @@ class ModelDataUtility:
                     for link in principled.inputs['Base Color'].links:
                         print(link.from_node.bl_idname)
                         if link.from_node.bl_idname == "ShaderNodeTexImage":
-                            texture = os.path.basename(link.from_node.image.filepath)
+                            texture = bpy.path.basename(link.from_node.image.filepath)
                             x_material.texture_extension = link.from_node.extension
                             x_material.texture_name = link.from_node.image.name
                         if link.from_node.bl_idname == "ShaderNodeRGB":
