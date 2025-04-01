@@ -124,11 +124,11 @@ class ModelDataUtility:
                                 # ノードを取得
                                 nodes = material.node_tree.nodes
                                 # プリンシプルBSDFを取得
-                                principled = next(n for n in nodes if n.type == 'BSDF_PRINCIPLED')
+                                principled = next(n for n in nodes if n.bl_idname == 'ShaderNodeBsdfPrincipled')
                                 # テクスチャの有無を確認
                                 if len(principled.inputs['Base Color'].links) > 0:
                                     for link in principled.inputs['Base Color'].links:
-                                        if link.from_node.type == "TEX_IMAGE":
+                                        if link.from_node.bl_idname == "ShaderNodeTexImage":
                                             texture = os.path.basename(link.from_node.image.filepath)
                         self.faces_use_material.append(materials_dict[mesh.materials[polygon.material_index].name])
 
@@ -186,14 +186,15 @@ class ModelDataUtility:
                 if len(principled.inputs['Base Color'].links) > 0:
                     need_color = True
                     for link in principled.inputs['Base Color'].links:
+                        print(link.from_node.bl_idname)
                         if link.from_node.bl_idname == "ShaderNodeTexImage":
                             texture = os.path.basename(link.from_node.image.filepath)
                             x_material.texture_extension = link.from_node.extension
                             x_material.texture_name = link.from_node.image.name
-                        if link.from_node.type == "RGB":
+                        if link.from_node.bl_idname == "ShaderNodeRGB":
                             need_color = False
                             for out in link.from_node.outputs:
-                                if out.type == 'RGBA':
+                                if out.bl_idname == 'NodeSocketColor':
                                     x_material.face_color = (out.default_value[0], out.default_value[1], out.default_value[2], principled.inputs['Alpha'].default_value)
                                     if gamma_correction:
                                         x_material.face_color = (
@@ -202,7 +203,7 @@ class ModelDataUtility:
                                             math.pow(x_material.face_color[2], 1/2.2),
                                             x_material.face_color[3]
                                         )
-                        if link.from_node.type == "GAMMA":
+                        if link.from_node.bl_idname == "ShaderNodeGamma":
                             for input in link.from_node.inputs:
                                 if input.identifier == 'Gamma':
                                     if round(input.default_value * 100) != 220:
