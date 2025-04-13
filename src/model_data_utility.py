@@ -83,6 +83,8 @@ class ModelDataUtility:
         self.uv_data = []
         fake_material = gen_fake_material()
 
+        material_name_set = set()
+
         target_objects = bpy.context.scene.objects
         if export_selected_only:
             target_objects = bpy.context.selected_objects
@@ -170,8 +172,19 @@ class ModelDataUtility:
             # ノードを使用するかどうか
             x_material = Material()
             # マテリアル名はアルファベット英数字、アンダーバー、ハイフン
-            if re.fullmatch("[0-9A-z_-]*", material.name):
-                x_material.name = material.name
+            x_material.name = re.sub(r'[^0-9A-Za-z_-]', '', material.name)
+            if x_material.name in material_name_set:
+                index = len(material_name_set)
+                while True:
+                    if x_material.name + str(index) not in material_name_set:
+                        break
+                    index += 1
+                x_material.name = x_material.name + str(index)
+            if re.match(r'^[0-9_]', x_material.name):
+                x_material.name = ""
+            if len(x_material.name) == 0:
+                # マテリアル名の重複を避ける
+                material_name_set.add(x_material.name)
             if material.use_nodes:
                 texture = ""
 
