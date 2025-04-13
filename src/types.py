@@ -6,6 +6,11 @@ from bpy.types import NodeTreeInterfaceSocket
 class CustomOpenBveCsvNode(bpy.types.Node):
     bl_idname = "OpenBveCsv"  # Unique identifier for the node
     bl_label = "OpenBVE CSV Properties"  # Name that will appear on the node in the editor
+
+    use_add_face_2: BoolProperty(
+        name="Use AddFace2",
+        default=False,
+    )
     
     enable_cross_fading: BoolProperty(
         name="Enable cross-fading",
@@ -64,6 +69,7 @@ class CustomOpenBveCsvNode(bpy.types.Node):
 
     # Additional buttons displayed on the node.
     def draw_buttons(self, context, layout):
+        layout.prop(self, "use_add_face_2")
         layout.prop(self, "enable_cross_fading")
         layout.prop(self, "use_blend_mode")
         layout.prop(self, "blend_mode")

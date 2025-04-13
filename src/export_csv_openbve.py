@@ -77,10 +77,10 @@ class ExportOpenBveCSVFile(bpy.types.Operator, ExportHelper):
 
         csv_file_content = ""
 
-        face_command = "AddFace2" if self.use_add_face2 else "AddFace"
 
         # マテリアルごとに作成 / Create for each material
         for material_index in range(len(x_materials)):
+            face_command = "AddFace2" if self.use_add_face2 else "AddFace"
             csv_file_content += 'CreateMeshBuilder,\n'
             vertices_dict = {}
             vertices_list = []
@@ -88,6 +88,8 @@ class ExportOpenBveCSVFile(bpy.types.Operator, ExportHelper):
             faces_no_duplicates = []
             x_material = x_materials[material_index]
             openbve_csv_property = x_material.openbve_csv_property
+            if x_material.openbve_csv_property is not None:
+                face_command = "AddFace2" if x_material.openbve_csv_property.use_add_face_2 else "AddFace"
             for face_index in range(len(faces)):
                 x_material_index = faces_use_material[face_index]
                 if x_material_index != material_index:

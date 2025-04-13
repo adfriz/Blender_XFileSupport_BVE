@@ -15,6 +15,7 @@ class OpenBveCsvProperty:
     use_decal_transparent_color: bool = False
     decal_transparent_color: tuple[float, float, float] = (0.0, 0.0, 0.0)
     nighttime_texture_path: str | None = None
+    use_add_face_2: bool = False
 
 class Material:
     face_color: tuple[float, float, float, float] = (0.0, 0.0, 0.0, 1.0)
@@ -251,6 +252,7 @@ class ModelDataUtility:
                         openbve_csv_node: CustomOpenBveCsvNode = n
                         if openbve_csv_node is not None:
                             x_material.openbve_csv_property = OpenBveCsvProperty()
+                            x_material.openbve_csv_property.use_add_face_2 = openbve_csv_node.use_add_face_2
                             x_material.openbve_csv_property.enable_cross_fading = openbve_csv_node.enable_cross_fading
                             x_material.openbve_csv_property.use_blend_mode = openbve_csv_node.use_blend_mode
                             x_material.openbve_csv_property.blend_mode = openbve_csv_node.blend_mode
